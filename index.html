@@ -186,12 +186,24 @@
     </audio>
 
     <script>
-        // High quality reliable romantic Bubu-Dudu animations
+        // Your exact filenames mapped with automatic URL encoding for spaces and special characters
         const momentsData = [
-            { img: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3k0a3lhOGpsMml4Mno0aWxscW96amRydHRvOHB4MXpmMXVsaW1hayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0ThflsHCqDrG/giphy.gif", caption: "Miss You 🥺" },
-            { img: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTB6dTZ5YXVscXJ6NHE4ZjZqOWt4d3FobmN1MnFlODc1ZDF3OWRjMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlRnAWXxn0MhOBK/giphy.gif", caption: "Kiss You 😘" },
-            { img: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDllNzhkODVlZTNlNzA0ZDRkYWY2YjkyNTAyNjYwZDRmZGMzYmJkMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEjI6SIIHBdRxXI40/giphy.gif", caption: "Hug You 🫂" },
-            { img: "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVnbmxpajV5anlwaG1tcWZtbGZlZmNwdmh0bW91eW9ocmZ5cmluOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiOkM/giphy.gif", caption: "Always With You 🥰" }
+            {
+                file: "Miss You Sticker - Miss You - Discover & Share GIFs.gif",
+                caption: "Miss You 🥺"
+            },
+            {
+                file: "Love Bunny Sticker - Love Bunny - Descubre y comparte GIF.gif",
+                caption: "Kiss You 😘"
+            },
+            {
+                file: "Tkthao219 Bubududu Sticker - Tkthao219 Bubududu Panda - Discover & Share GIFs.gif",
+                caption: "Hug You 🫂"
+            },
+            {
+                file: "Happy Dance GIF - Happy Dance - Discover & Share GIFs.gif",
+                caption: "Always With You 🥰"
+            }
         ];
 
         let currentIndex = 0;
@@ -200,10 +212,14 @@
             let item1 = momentsData[currentIndex % momentsData.length];
             let item2 = momentsData[(currentIndex + 1) % momentsData.length];
 
-            document.getElementById('img1').src = item1.img;
+            let imgEl1 = document.getElementById('img1');
+            let imgEl2 = document.getElementById('img2');
+
+            // encodeURI automatically handles spaces and special characters so GitHub loads them perfectly
+            imgEl1.src = encodeURI(item1.file);
             document.getElementById('cap1').innerText = item1.caption;
 
-            document.getElementById('img2').src = item2.img;
+            imgEl2.src = encodeURI(item2.file);
             document.getElementById('cap2').innerText = item2.caption;
 
             document.getElementById('pageCounter').innerText = `Moments ${currentIndex + 1} & ${(currentIndex + 1) % 4 + 1} of 4 💕`;
