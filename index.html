@@ -13,7 +13,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             min-height: 100vh;
             padding: 20px;
             overflow-x: hidden;
@@ -38,12 +38,93 @@
             50% { opacity: 0.8; }
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
+
+        /* 1st Page: Click on me Miya Screen */
+        #welcomeOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 209, 220, 0.96);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.6s ease;
+        }
+        .envelope-box {
+            background: #ffffff;
+            padding: 45px 30px;
+            border-radius: 35px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            border: 3px solid #ffb6c1;
+            max-width: 360px;
+            width: 90%;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .envelope-icon {
+            font-size: 65px;
+            margin-bottom: 15px;
+        }
+        .click-me-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 42px;
+            color: #d81b60;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+        .click-me-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .click-me-btn:hover {
+            transform: scale(1.08);
+            background: linear-gradient(135deg, #ff1493, #c71585);
+        }
+
+        /* 2nd Page: Main Card Container (Hidden initially) */
+        .card-container {
+            position: relative;
+            z-index: 5;
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.25);
+            padding: 25px 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid #ffb6c1;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         .top-controls {
             position: absolute;
             top: 20px;
             width: 100%;
             max-width: 450px;
-            display: flex;
+            display: none;
             justify-content: space-between;
             padding: 0 20px;
             z-index: 10;
@@ -60,25 +141,10 @@
             transition: transform 0.2s;
         }
         .control-btn:hover { transform: scale(1.1); }
-        .card-container {
-            position: relative;
-            z-index: 5;
-            background: #ffffff;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.25);
-            padding: 25px 20px;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 3px solid #ffb6c1;
-        }
+
         .header-title {
             font-family: 'Sacramento', cursive;
-            font-size: 42px;
+            font-size: 40px;
             color: #d81b60;
             margin-bottom: 5px;
             text-align: center;
@@ -154,13 +220,24 @@
 
     <div class="heart-bg" id="heartBg"></div>
 
-    <div class="top-controls">
+    <!-- 1st Page: Click on me Miya Screen -->
+    <div id="welcomeOverlay">
+        <div class="envelope-box">
+            <div class="envelope-icon">💌</div>
+            <div class="click-me-title">Click on me Miya</div>
+            <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Someone special sent you a sweet surprise...</p>
+            <button class="click-me-btn" onclick="openSurprise()">Open 💖</button>
+        </div>
+    </div>
+
+    <!-- Top Music & Sound Controls (Hidden initially) -->
+    <div class="top-controls" id="topControls">
         <button class="control-btn" id="soundBtn" onclick="toggleAudio()" title="Play Music">🔊</button>
         <button class="control-btn" onclick="triggerHearts()" title="Send Hearts">💖</button>
     </div>
 
-    <div class="card-container">
-        <!-- Updated Title as requested -->
+    <!-- 2nd Page: Main Card Container -->
+    <div class="card-container" id="mainCard">
         <div class="header-title">MISS YOU MY MIYA 💕</div>
         <div class="header-quote">"Every second apart makes me miss you a little more..."</div>
 
@@ -183,12 +260,12 @@
         <button class="action-btn" onclick="nextMoments()">Show me more 💖</button>
     </div>
 
+    <!-- Audio Element -->
     <audio id="bgMusic" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-473.mp3" type="audio/mp3">
     </audio>
 
     <script>
-        // Your exact filenames mapped with encodeURI for GitHub repository compatibility
         const momentsData = [
             {
                 file: "Miss You Sticker - Miss You - Discover & Share GIFs.gif",
@@ -226,14 +303,30 @@
             document.getElementById('pageCounter').innerText = `Moments ${currentIndex + 1} & ${(currentIndex + 1) % 4 + 1} of 4 💕`;
         }
 
+        function openSurprise() {
+            const overlay = document.getElementById('welcomeOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.getElementById('mainCard').style.display = 'flex';
+                document.getElementById('topControls').style.display = 'flex';
+                updateMoments();
+                triggerHearts();
+                // Play romantic music automatically upon opening
+                const music = document.getElementById('bgMusic');
+                music.play().catch(() => {});
+                document.getElementById('soundBtn').innerHTML = '🎵';
+                isPlaying = true;
+            }, 600);
+        }
+
         function nextMoments() {
             currentIndex = (currentIndex + 2) % momentsData.length;
             updateMoments();
             triggerHearts();
         }
 
-        updateMoments();
-
+        // Background Floating Hearts
         const heartBg = document.getElementById('heartBg');
         setInterval(() => {
             const h = document.createElement('div');
