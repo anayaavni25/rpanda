@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miss You 💕 - Special Moments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #ffd1dc;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .heart-bg {
+            position: absolute;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            top: 0; left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.4);
+            animation: floatUp 6s linear infinite;
+            font-size: 20px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+        .top-controls {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+        }
+        .control-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+        .control-btn:hover { transform: scale(1.1); }
+        .card-container {
+            position: relative;
+            z-index: 5;
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.25);
+            padding: 25px 20px;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid #ffb6c1;
+        }
+        .header-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 48px;
+            color: #d81b60;
+            margin-bottom: 5px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.5);
+        }
+        .header-quote {
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .moment-card {
+            background: #fff5f7;
+            border: 2px dashed #ffb6c1;
+            border-radius: 20px;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .moment-img-box {
+            width: 100%;
+            height: 230px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .moment-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .moment-caption {
+            margin-top: 10px;
+            font-family: 'Sacramento', cursive;
+            font-size: 32px;
+            color: #c71585;
+            text-align: center;
+        }
+        .counter-text {
+            font-size: 12px;
+            color: #999;
+            margin: 5px 0 15px 0;
+            font-weight: 500;
+        }
+        .action-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .action-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff1493, #c71585);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="top-controls">
+        <button class="control-btn" id="soundBtn" onclick="toggleAudio()" title="Play Music">🔊</button>
+        <button class="control-btn" onclick="triggerHearts()" title="Send Hearts">💖</button>
+    </div>
+
+    <div class="card-container">
+        <div class="header-title">MISS YOU 💕</div>
+        <div class="header-quote">"Every second apart makes me miss you a little more..."</div>
+
+        <div class="moment-card">
+            <div class="moment-img-box">
+                <img id="img1" src="" alt="Moment 1">
+            </div>
+            <div class="moment-caption" id="cap1">Miss You 🥺</div>
+        </div>
+
+        <div class="moment-card">
+            <div class="moment-img-box">
+                <img id="img2" src="" alt="Moment 2">
+            </div>
+            <div class="moment-caption" id="cap2">Kiss You 😘</div>
+        </div>
+
+        <div class="counter-text" id="pageCounter">Moments 1 & 2 of 4 💕</div>
+
+        <button class="action-btn" onclick="nextMoments()">Show me more 💖</button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-473.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        // High quality reliable romantic Bubu-Dudu animations
+        const momentsData = [
+            { img: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3k0a3lhOGpsMml4Mno0aWxscW96amRydHRvOHB4MXpmMXVsaW1hayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0ThflsHCqDrG/giphy.gif", caption: "Miss You 🥺" },
+            { img: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTB6dTZ5YXVscXJ6NHE4ZjZqOWt4d3FobmN1MnFlODc1ZDF3OWRjMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlRnAWXxn0MhOBK/giphy.gif", caption: "Kiss You 😘" },
+            { img: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDllNzhkODVlZTNlNzA0ZDRkYWY2YjkyNTAyNjYwZDRmZGMzYmJkMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEjI6SIIHBdRxXI40/giphy.gif", caption: "Hug You 🫂" },
+            { img: "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVnbmxpajV5anlwaG1tcWZtbGZlZmNwdmh0bW91eW9ocmZ5cmluOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiOkM/giphy.gif", caption: "Always With You 🥰" }
+        ];
+
+        let currentIndex = 0;
+
+        function updateMoments() {
+            let item1 = momentsData[currentIndex % momentsData.length];
+            let item2 = momentsData[(currentIndex + 1) % momentsData.length];
+
+            document.getElementById('img1').src = item1.img;
+            document.getElementById('cap1').innerText = item1.caption;
+
+            document.getElementById('img2').src = item2.img;
+            document.getElementById('cap2').innerText = item2.caption;
+
+            document.getElementById('pageCounter').innerText = `Moments ${currentIndex + 1} & ${(currentIndex + 1) % 4 + 1} of 4 💕`;
+        }
+
+        function nextMoments() {
+            currentIndex = (currentIndex + 2) % momentsData.length;
+            updateMoments();
+            triggerHearts();
+        }
+
+        updateMoments();
+
+        const heartBg = document.getElementById('heartBg');
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.classList.add('floating-heart');
+            h.innerHTML = ['💖', '💕', '✨', '💗', '🧸'][Math.floor(Math.random() * 5)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heartBg.appendChild(h);
+            setTimeout(() => h.remove(), 6000);
+        }, 500);
+
+        function triggerHearts() {
+            for(let i=0; i<10; i++) {
+                const h = document.createElement('div');
+                h.classList.add('floating-heart');
+                h.innerHTML = '💖';
+                h.style.left = (50 + (Math.random() * 40 - 20)) + 'vw';
+                h.style.top = '50vh';
+                h.style.animationDuration = '2s';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 2000);
+            }
+        }
+
+        let isPlaying = false;
+        function toggleAudio() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('soundBtn');
+            if(isPlaying) {
+                music.pause();
+                btn.innerHTML = '🔊';
+                isPlaying = false;
+            } else {
+                music.play().catch(() => {});
+                btn.innerHTML = '🎵';
+                isPlaying = true;
+            }
+        }
+    </script>
+</body>
+</html>
